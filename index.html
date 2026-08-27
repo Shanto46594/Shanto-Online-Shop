@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shanto Marketplace & Auth App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>🛒 Shanto Online Shop</h1>
+      <p>কেনাবেচা ও অনলাইন সার্ভিস প্ল্যাটফর্ম</p>
+    </header>
+
+    <!-- Authentication Section -->
+    <div id="auth-card" class="card">
+      <h2 id="auth-title">লগইন করুন</h2>
+      <div class="input-group">
+        <input type="email" id="email" placeholder="আপনার ইমেইল">
+        <input type="password" id="password" placeholder="পাসওয়ার্ড">
+      </div>
+      <button id="btn-login" class="btn btn-success">লগইন</button>
+      <button id="btn-signup" class="btn btn-primary" style="display:none;">সাইন আপ</button>
+      
+      <p class="toggle-link">
+        <span id="toggle-text">নতুন অ্যাকাউন্ট নেই?</span> 
+        <a href="#" id="toggle-btn">নতুন অ্যাকাউন্ট খুলুন</a>
+      </p>
+      <p id="auth-error" class="error-msg"></p>
+    </div>
+
+    <!-- Main Dashboard Section (After Login) -->
+    <div id="dashboard" class="card" style="display: none;">
+      <div class="user-info">
+        <p>স্বাগতম, <strong id="user-email"></strong>!</p>
+        <button id="btn-logout" class="btn btn-danger btn-sm">লগআউট</button>
+      </div>
+
+      <hr>
+
+      <!-- Post Product Section -->
+      <div class="post-box">
+        <h3>নতুন পণ্য পোস্ট করুন</h3>
+        <input type="text" id="p-title" placeholder="পণ্য বা সার্ভিসের নাম">
+        <input type="number" id="p-price" placeholder="মূল্য (টাকা)">
+        <input type="text" id="p-img" placeholder="ছবি URL (Image Link)">
+        <button id="btn-post" class="btn btn-primary">পণ্য বিক্রি করার জন্য পোস্ট করুন</button>
+      </div>
+
+      <hr>
+
+      <!-- Marketplace Feed -->
+      <h3>পণ্য ও সার্ভিসের তালিকা</h3>
+      <div id="product-feed" class="feed-grid">
+        <!-- Products will load here dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- App Script -->
+  <script type="module" src="app.js"></script>
+</body>
+        </html>
+  

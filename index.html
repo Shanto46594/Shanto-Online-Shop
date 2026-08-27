@@ -3,64 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shanto Marketplace & Auth App</title>
+  <title>Shanto Express | Premier Marketplace</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <h1>🛒 Shanto Online Shop</h1>
-      <p>কেনাবেচা ও অনলাইন সার্ভিস প্ল্যাটফর্ম</p>
-    </header>
-
-    <!-- Authentication Section -->
-    <div id="auth-card" class="card">
-      <h2 id="auth-title">লগইন করুন</h2>
-      <div class="input-group">
-        <input type="email" id="email" placeholder="আপনার ইমেইল">
-        <input type="password" id="password" placeholder="পাসওয়ার্ড">
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <h1 class="logo">Shanto<span>Express</span></h1>
+      <div id="nav-user" class="nav-user" style="display: none;">
+        <span id="user-badge" class="badge">Personal</span>
+        <span id="nav-email"></span>
+        <button id="btn-logout" class="btn-sm btn-outline">লগআউট</button>
       </div>
-      <button id="btn-login" class="btn btn-success">লগইন</button>
-      <button id="btn-signup" class="btn btn-primary" style="display:none;">সাইন আপ</button>
+    </div>
+  </nav>
+
+  <div class="main-container">
+
+    <!-- Auth Section -->
+    <div id="auth-card" class="glass-card auth-box">
+      <h2 id="auth-title">অ্যাকাউন্টে প্রবেশ করুন</h2>
+      <p class="subtitle">মার্কেটপ্লেসে কেনাবেচা শুরু করতে সাইন ইন করুন</p>
+      
+      <div class="input-group">
+        <label>ইমেইল অ্যাড্রেস</label>
+        <input type="email" id="email" placeholder="example@mail.com">
+      </div>
+
+      <div class="input-group">
+        <label>পাসওয়ার্ড</label>
+        <input type="password" id="password" placeholder="••••••••">
+      </div>
+
+      <!-- Account Type Selection (Visible only in Signup mode) -->
+      <div id="acc-type-group" class="input-group" style="display: none;">
+        <label>অ্যাকাউন্টের ধরন নির্বাচন করুন</label>
+        <div class="radio-group">
+          <label class="radio-card">
+            <input type="radio" name="accType" value="Personal" checked>
+            <div class="radio-content">
+              <strong>পার্সোনাল</strong>
+              <small>পণ্য কেনাকাটার জন্য</small>
+            </div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="accType" value="Business">
+            <div class="radio-content">
+              <strong>বিজনেস</strong>
+              <small>পণ্য বিক্রয় করার জন্য</small>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <button id="btn-login" class="btn btn-primary">লগইন করুন</button>
+      <button id="btn-signup" class="btn btn-primary" style="display:none;">অ্যাকাউন্ট তৈরি করুন</button>
       
       <p class="toggle-link">
         <span id="toggle-text">নতুন অ্যাকাউন্ট নেই?</span> 
-        <a href="#" id="toggle-btn">নতুন অ্যাকাউন্ট খুলুন</a>
+        <a href="#" id="toggle-btn">নিবন্ধন করুন</a>
       </p>
       <p id="auth-error" class="error-msg"></p>
     </div>
 
-    <!-- Main Dashboard Section (After Login) -->
-    <div id="dashboard" class="card" style="display: none;">
-      <div class="user-info">
-        <p>স্বাগতম, <strong id="user-email"></strong>!</p>
-        <button id="btn-logout" class="btn btn-danger btn-sm">লগআউট</button>
+    <!-- Main Marketplace Feed (After Login) -->
+    <div id="dashboard" style="display: none;">
+      
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <h2>সেরা দামে সঠিক পণ্য কিনুন</h2>
+        <p>দেশজুড়ে শত শত বিশ্বস্ত সেলারদের থেকে কেনাকাটা করুন সহজে</p>
       </div>
 
-      <hr>
+      <!-- Business Seller Posting Form (Only for Business Users) -->
+      <div id="seller-panel" class="glass-card post-box" style="display: none;">
+        <h3>🛍️ নতুন পণ্য যুক্ত করুন (বিজনেস প্যানেল)</h3>
+        <div class="form-grid">
+          <input type="text" id="p-title" placeholder="পণ্যের নাম">
+          <input type="number" id="p-price" placeholder="মূল্য (আপনার রেট)" oninput="calculateCommission()">
+          <input type="text" id="p-img" placeholder="ছবি URL (Direct Link)">
+        </div>
+        
+        <!-- Commission Preview -->
+        <div class="price-breakdown">
+          <span>প্ল্যাটফর্ম কমিশন (১০%): ৳<span id="comm-fee">0</span></span>
+          <strong>গ্রাহকের জন্য বিক্রয়মূল্য: ৳<span id="final-price">0</span></strong>
+        </div>
 
-      <!-- Post Product Section -->
-      <div class="post-box">
-        <h3>নতুন পণ্য পোস্ট করুন</h3>
-        <input type="text" id="p-title" placeholder="পণ্য বা সার্ভিসের নাম">
-        <input type="number" id="p-price" placeholder="মূল্য (টাকা)">
-        <input type="text" id="p-img" placeholder="ছবি URL (Image Link)">
-        <button id="btn-post" class="btn btn-primary">পণ্য বিক্রি করার জন্য পোস্ট করুন</button>
+        <button id="btn-post" class="btn btn-success">পণ্য আপলোড করুন</button>
       </div>
 
-      <hr>
-
-      <!-- Marketplace Feed -->
-      <h3>পণ্য ও সার্ভিসের তালিকা</h3>
-      <div id="product-feed" class="feed-grid">
-        <!-- Products will load here dynamically -->
+      <!-- Products Grid -->
+      <div class="section-title">
+        <h3>সাম্প্রতিক পণ্যসমূহ</h3>
+      </div>
+      
+      <div id="product-feed" class="product-grid">
+        <!-- Products render dynamically -->
       </div>
     </div>
+
   </div>
 
-  <!-- App Script -->
   <script type="module" src="app.js"></script>
 </body>
-        </html>
-  
+          </html>
+          
